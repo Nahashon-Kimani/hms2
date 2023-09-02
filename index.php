@@ -16,7 +16,7 @@
 | our application. We just need to utilize it! We'll simply require it
 | into the script here so that we don't have to worry about manual
 | loading any of our classes later on. It feels nice to relax.
-|
+| This application was developed in Laravel and AWS
 */
 
 require __DIR__.'/bootstrap/autoload.php';

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
 
 class ResetPasswordController extends Controller
 {
@@ -21,12 +23,31 @@ class ResetPasswordController extends Controller
     use ResetsPasswords;
 
     /**
-     * Create a new controller instance.
+     * Where to redirect users after resetting their password.
      *
-     * @return void
+     * @var string
      */
+    protected $redirectTo;
+
     public function __construct()
     {
+        if(Auth::check() && Auth::user()->role_id == 1)
+        {
+            $this->redirectTo = route('admin.dashboard');
+        }
+        elseif(Auth::check() && Auth::user()->roles->id == 2)
+        {
+            $this->redirectTo = route('doctor.dashboard');
+        }
+        elseif(Auth::check() && Auth::user()->roles->id == 3)
+        {
+            $this->redirectTo = route('assistant.dashboard');
+        }
+        else
+        {
+            $this->redirectTo = route('patient.dashboard');
+        }
+
         $this->middleware('guest');
     }
 }
